@@ -6,7 +6,7 @@
         <div class="section-header">
             <ol class="breadcrumb">
                 <li><a href="<?= base_url()."assets/mat-admin" ?>/html/.html">home</a></li>
-                <li class="active">Account List</li>
+                <li class="active">Secure Note</li>
             </ol>
         </div><!--end .section-header -->
         <div class="section-body">
@@ -17,9 +17,11 @@
                             <tr>
                                 <th>#</th>
                                 <!-- <th>user_id<th> -->
-                                <th>URL</th>
-                                <th>Username</th>
-                                <?php if ($this->session->userdata('role') != 'admin'){ ?>
+                                <th>Name</th>
+                                <th>Folder</th>
+                                <th>Note-type</th>
+                                <th>Note</th>
+                                <?php if ($this->session->userdata('role') != 'admin') { ?>
                                 <th>Action</th>
                                 <?php } ?>
                             </tr>
@@ -29,36 +31,35 @@
 
                         <?php
                             $ctr = 1;
-                            foreach($listOfAccounts as $account)
+                            foreach($listOfSecures as $secures)
                             {
-                         ?>
-
+                         ?> 
                                 <tr>
-                                <?php 
+                                  <?php
                                     if ($this->session->userdata('role') == 'admin') {
-                                  ?>
-                                    <td><?= $ctr++; ?></td>
-                                    <!--<td>$account->user_id<!--</td>-->
-                                    <td><?= $account->url; ?></td>
-                                    <td><?= $account->username; ?></td>
+                                        ?><td><?= $ctr++; ?></td>
+                                    <!--<td>$secures->user_id<!--</td>-->
+                                    <td><?= $secures->name; ?></td>
+                                    <td><?= $secures->folder; ?></td>
+                                    <td><?= $secures->note_type; ?></td>
+                                    <td><?= $secures->note; ?></td>
+                                    
                                         
-                                </tr>
-                                  <?php 
-                                    }elseif ($this->session->userdata('ndex') == $account->user_id) {
+                                               
+                                    <?php }
+                                    elseif ($this->session->userdata('ndex') == $secures->user_id) {
                                   ?>
                                     <td><?= $ctr++; ?></td>
-                                    <!--<td>$account->user_id<!--</td>-->
-                                    <td><?= $account->url; ?></td>
-                                    <td><?= $account->username; ?></td>
+                                    <!--<td>$secures->user_id<!--</td>-->
+                                    <td><?= $secures->name; ?></td>
+                                    <td><?= $secures->folder; ?></td>
+                                    <td><?= $secures->note_type; ?></td>
+                                    <td><?= $secures->note; ?></td>
                                     <td>
-                                        
-                                        <?php if ($this->session->userdata('role') != 'admin'){ ?>
-                                            <a href="<?= base_url()."c_accounts/editaccount/". $account->ndex; ?>" class="btn btn-primary btn-sm">Edit</a>
-                                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#simpleModal<?= $account->ndex; ?>">Delete</button>
-                                            <a href="<?= base_url()."c_accounts/#". $account->ndex; ?>" class="btn btn-primary btn-sm">Login</a>
-                                        <?php } ?>
+                                        <a href="<?= base_url()."c_secures/editsecure/". $secures->ndex; ?>" class="btn btn-primary btn-sm">Edit</a>
+                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#simpleModal<?= $secures->ndex; ?>">Delete</button>
                                         <!-- BEGIN SIMPLE MODAL MARKUP -->
-                                        <div class="modal fade" id="simpleModal<?= $account->ndex; ?>" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="simpleModal<?= $secures->ndex; ?>" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">  
@@ -67,21 +68,22 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <p>Are you Sure to Delete?</p>
-                                                        <p><strong>Account URL : </strong> <?= $account->url; ?> <br><strong>Account Username : </strong> <?= $account->username; ?>  </p>
+                                                        <p><strong>Secute note name : </strong> <?= $secures->name; ?> <br><strong>Secute note folder: </strong> <?= $secures->folder; ?>  </p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                                        <a href="<?= base_url()."c_accounts/deleteaccount/". $account->ndex; ?>" class="btn btn-danger btn-sm">Delete</a>
+                                                        <a href="<?= base_url()."c_secures/deletesecure/". $secures->ndex; ?>" class="btn btn-danger btn-sm">Delete</a>
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
                                         <!-- END SIMPLE MODAL MARKUP -->
                                     </td>
+                                     <?php
+                                        } 
+                                    ?>
                                 </tr>
-                            <?php 
-                                }
-                            ?>
+                           
                         <?php
                             }
                         ?>

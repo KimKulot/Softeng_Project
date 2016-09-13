@@ -10,9 +10,10 @@ class m_users extends CI_Model
     {
 		$this->db->insert('tblusers', $data);
     }
-    function updateuser($data)
+    function updateuser($data, $userndex)
     {
-
+        $this->db->where('ndex', $userndex);
+        $this->db->update('tblusers', $data);
     }
      function getUserByNdex($userndex)
     {
@@ -33,6 +34,35 @@ class m_users extends CI_Model
         $this->db->update('tblusers', $data);
     }
 
+    function exist($email)
+    {
+        $this->db->where('email', $email);
+
+        $query = $this->db->get('tblusers');
+
+        $qresult = $query->first_row('array');
+        //count if query->result() array has content in it.
+        if(count($qresult) > 0)
+        {
+            $emailArray = array(
+                "ndex" => $qresult['ndex'],
+                "email" => $qresult['email'],
+                "firstname" => $qresult['firstname'],
+                "lastname" => $qresult['lastname'],
+                "role" => $qresult['role']
+            );
+
+            $this->session->set_userdata($emailArray);
+            $this->session->set_flashdata('Email Exist', 'Valid Email');
+            return true;
+        }
+        else
+        {
+            $this->session->set_flashdata('emailError', 'Invalid Email Address');
+            return false;
+        }
+    }
+
     function existemail($email)
     {
         $this->db->where('email', $email);
@@ -44,13 +74,14 @@ class m_users extends CI_Model
         if(count($qresult) > 0)
         {
             $emailArray = array(
-                "id" => $qresult['id'],
+                "ndex" => $qresult['ndex'],
                 "email" => $qresult['email'],
                 "firstname" => $qresult['firstname'],
                 "lastname" => $qresult['lastname'],
                 "role" => $qresult['role']
             );
-             $this->session->set_userdata($emailArray);
+
+            $this->session->set_userdata($emailArray);
             $this->session->set_flashdata('Email Exist', 'Valid Email');
             return true;
         }
@@ -66,24 +97,29 @@ class m_users extends CI_Model
     {
         $this->db->where('email', $email);
         $this->db->where('password', $password );
-
+        
         $query = $this->db->get('tblusers');
 
         $qresult = $query->first_row('array');
         //count if query->result() array has content in it.
         if(count($qresult) > 0)
-        {
+        {   
+            if ($qresult['toggle'] != 'activate') {
+               return false;
+            }else{
             //this is where we put the session data..
-            $loginArray = array(
-                "email" => $qresult['email'],
-                "firstname" => $qresult['firstname'],
-                "lastname" => $qresult['lastname'],
-                "role" => $qresult['role']
-            );
+                
+                $loginArray = array(
+                    "ndex" => $qresult['ndex'],
+                    "email" => $qresult['email'],
+                    "firstname" => $qresult['firstname'],
+                    "lastname" => $qresult['lastname'],
+                    "role" => $qresult['role']
+                );
+                $this->session->set_userdata($loginArray);
 
-            $this->session->set_userdata($loginArray);
-
-            return true;
+                return true;
+            }
         }
         else
         {

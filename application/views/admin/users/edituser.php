@@ -9,6 +9,7 @@
                 <li class="active">Edit User</li>
             </ol>
         </div><!--end .section-header -->
+
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
@@ -38,6 +39,14 @@
                         <div class="form-group floating-label">
                             <label for="confirmpassword">Confirm Password</label>
                             <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" value="" required>
+                        </div>
+                        <div class="form-group floating-label">
+                            <label for="note">Note</label>
+                                <textarea  name="note" rows="<2></2>" id="note" class="form-control" placeholder="<?= $thisuser['note']?>" required></textarea>
+                        </div>
+                        <div class="form-group floating-label">
+                            <label for="note">Note</label>
+                                <textarea  name="note" rows="2" id="note" class="form-control" placeholder="Note" required><?= $thisuser['note']?></textarea>
                         </div>
 
                         <button class="btn ink-reaction btn-primary btn-raised" type="submit">Update</button>

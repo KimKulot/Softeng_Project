@@ -7,14 +7,13 @@
         <div class="section-header">
             <ol class="breadcrumb">
                 <li><a href="<?= base_url()."assets/mat-admin" ?>/html/.html">home</a></li>
-                <li class="active">Users <?=count($listOfAccounts) ?></li>
+                <li class="active">Users</li>
             </ol>
         </div><!--end .section-header -->
         <div class="section-body">
             <div class="card">
 
                 <div class="card-body">
-                    <a href="<?= base_url()."c_mainusers/newuser"?>" class="btn btn-primary btn-sm pull-right">Add User</a>
                     <table class="table no-margin">
                         <thead>
                             <tr>
@@ -32,16 +31,18 @@
                             foreach($listOfAccounts as $user)
                             {
                          ?>
-
                                 <tr>
                                     <td><?= $ctr++; ?></td>
                                     <td><?= $user->email; ?></td>
                                     <td><?= $user->firstname; ?></td>
                                     <td><?= $user->lastname; ?></td>
                                     <td>
-
+                                    <?php if ($this->session->userdata('role') != 'admin'){ ?>
                                       <a href="<?= base_url()."c_mainusers/edituser/". $user->ndex; ?>" class="btn btn-primary btn-sm">Edit</a>
                                         <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#simpleModal<?= $user->ndex; ?>">Delete</button>
+                                    <?php } ?>
+                                       <a href="<?= base_url()."c_secures/view/". $user->ndex; ?>" class="btn btn-primary btn-sm">View Secure notes</a>
+                                       <a href="<?= base_url()."c_accounts/view/". $user->ndex; ?>" class="btn btn-primary btn-sm">View Account</a>
                                         <!-- BEGIN SIMPLE MODAL MARKUP -->
                                         <div class="modal fade" id="simpleModal<?= $user->ndex; ?>" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">

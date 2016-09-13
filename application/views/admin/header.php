@@ -59,9 +59,9 @@
             <ul class="header-nav header-nav-options">
                 <li>
                     <!-- Search form -->
-                    <form class="navbar-search" role="search">
+                    <form class="navbar-search" role="search" action="<?= base_url()."c_accounts/search" ?>" method="post">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="headerSearch" placeholder="Enter your keyword">
+                            <input type="text" class="form-control" name="search" placeholder="Enter search word" required>
                         </div>
                         <button type="submit" class="btn btn-icon-toggle ink-reaction"><i class="fa fa-search"></i></button>
                     </form>

@@ -11,7 +11,7 @@
 | next to the desiered server, then clicking 'Settings & API Credentials'
 |
 */
-$config['api_key'] = 'b8f32132-7442-40f5-b392-07bcbd6efcb2';
+$config['api_key'] = '21e7423f-717e-409f-bd86-920914678a22';
  
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ $config['api_key'] = 'b8f32132-7442-40f5-b392-07bcbd6efcb2';
 | Configure your Sender Signatures at http://postmarkapp.com/signatures
 */
 $config['from_name'] = 'JMC Integrated Library System';
-$config['from_address'] = 'johnb.urquia@jmc.edu.ph';
+$config['from_address'] = 'benedict.deasis@jmc.edu.ph';
  
 /*
 |--------------------------------------------------------------------------

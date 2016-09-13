@@ -13,12 +13,31 @@ class m_accounts extends CI_Model
         $this->db->insert('tblaccounts', $data);
     }
 
+    function getAllAccountAdmin($ndex)
+    {
+        $this->db->where('user_id', $ndex);
+        $query = $this->db->get('tblaccounts');
+        return $query->result();
+    }
+
+    function getSearch($search)
+    {
+        $this->db->like('url', $search);
+        $query = $this->db->get('tblaccounts');
+        return $query->result();
+        // $this->db->where('url', $search);
+        // $query = $this->db->get('tblaccounts');
+        // var_dump($query->result()); die;
+        // return $query->row_array();
+    }   
+
     //reads record in the database
     function getAllAccounts()
     {
         $query = $this->db->get('tblaccounts');
         return $query->result();
     }
+
 
     //reads record by condition
     function getAccountByNdex($accountndex)

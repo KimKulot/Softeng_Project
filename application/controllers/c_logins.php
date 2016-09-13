@@ -20,15 +20,15 @@ Class C_logins extends CI_Controller
     public function beginlogin()
     {
         //1. Execute SQL Query
-
+        
         $boolLogin = $this->m_users->logthisuser($_POST['email'], $_POST['password']);
-      
+        
         //2. If Login is ok means go to booklist page else go back to login and say pagxure..
         if($boolLogin)
         {
             //this is where we will send an email to admin..
             $this->sendEmail('edzel.abliter@jmc.edu.ph');
-            redirect(base_url()."c_accounts");
+            redirect(base_url()."c_devlogs/addlogs");
         }
         else
         {
@@ -46,7 +46,7 @@ Class C_logins extends CI_Controller
 
     public function sendEmail($emailaddress)
     {
-        $this->postmark->from('johnb.urquia@jmc.edu.ph', 'JMC Library System');
+        $this->postmark->from('benedict.deasis@jmc.edu.ph', 'JMC Library System');
 
         $this->postmark->to($emailaddress, 'To Name');
 
