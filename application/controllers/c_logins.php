@@ -7,6 +7,8 @@ Class C_logins extends CI_Controller
         parent::__construct();
         $this->load->model('m_users');
         $this->load->library('postmark');
+        $this->load->model('m_trails');
+        $this->load->library('encrypt');
     }
 
 
@@ -26,7 +28,7 @@ Class C_logins extends CI_Controller
         //2. If Login is ok means go to booklist page else go back to login and say pagxure..
         if($boolLogin)
         {
-            //this is where we will send an email to admin..
+            //this is where we will send an em,ail to admin..
             $this->sendEmail('edzel.abliter@jmc.edu.ph');
             redirect(base_url()."c_devlogs/addlogs");
         }
@@ -40,6 +42,11 @@ Class C_logins extends CI_Controller
     //destroy session
     public function beginlogout()
     {
+        $newauditlog = array(
+            'email' => $this->session->userdata('email'),
+            'eventdetail' => 'Logout', 
+        );
+        $this->m_trails->addnewtrail($newauditlog);
         $this->session->sess_destroy();
         redirect(base_url()."c_logins");
     }

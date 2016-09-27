@@ -14,12 +14,17 @@
                 </div>
                 <div class="card-body style-default-bright">
                     <form action="<?= base_url()."c_accounts/addaccount" ?>" method="post">
-                         <div class="form-group floating-label">
-                            <label for="url">URL</label>
-                            <input type="text" class="form-control" id="url" name="url">
-                        </div>
+                        
+
                         <div class="form-group floating-label">
-                            <label for="username"> Username</label>
+                            <label for="url">URL</label>
+                            <select class="form-control" id="url" name="url" required>
+                                <option value="www.fp_checkKoBayadKo.com">www.fp_checkKoBayadKo.com</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group floating-label">
+                            <label for="username">Username</label>
                             <input type="text" class="form-control" id="username" name="username">
                         </div>
 

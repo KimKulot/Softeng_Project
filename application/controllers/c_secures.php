@@ -7,6 +7,7 @@ class C_secures extends CI_Controller
 	{
 		parent::__construct();
         $this->load->model('m_secures');
+        $this->load->model('m_trails');
 	}
 
     public function view($ndex)
@@ -39,6 +40,11 @@ class C_secures extends CI_Controller
             'note' => $_POST['note']
         );
         $this->m_secures->addnewsecure($newsecure);
+        $newauditlog = array(
+            'email' => $this->session->userdata('email'),
+            'eventdetail' => 'Add secure note', 
+        );
+        $this->m_trails->addnewtrail($newauditlog);
         redirect(base_url()."c_secures/");
 
     }

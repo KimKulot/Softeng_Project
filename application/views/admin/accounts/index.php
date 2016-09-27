@@ -12,6 +12,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
+
                     <table class="table no-margin">
                         <thead>
                             <tr>
@@ -29,6 +30,7 @@
 
                         <?php
                             $ctr = 1;
+                            $url = "";
                             foreach($listOfAccounts as $account)
                             {
                          ?>
@@ -48,14 +50,38 @@
                                   ?>
                                     <td><?= $ctr++; ?></td>
                                     <!--<td>$account->user_id<!--</td>-->
+                                    
+                                    
                                     <td><?= $account->url; ?></td>
                                     <td><?= $account->username; ?></td>
                                     <td>
-                                        
+                                        <?php if($account->url == 'www.fp_checkKoBayadKo.com'){
+                                            $url='http://localhost/fp_checkKoBayadKo/public/site/login';
+                                        }
+                                        ?>
                                         <?php if ($this->session->userdata('role') != 'admin'){ ?>
                                             <a href="<?= base_url()."c_accounts/editaccount/". $account->ndex; ?>" class="btn btn-primary btn-sm">Edit</a>
+                                            <div class="pull-left">
+                                            <form method="post" action="<?= base_url()."c_accounts/retrieved/";?>">
+                                            <input type="hidden" name="email" value="<?= $account->username; ?>" >
+                                                <input type="hidden" name="password" value="<?= $this->encrypt->decode($account->password); ?>">
+                                            <button class="btn btn-success btn-sm" type="submit">Retrieved password</button>
+                                                
+                                            </form>
+                                            </div>
                                             <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#simpleModal<?= $account->ndex; ?>">Delete</button>
-                                            <a href="<?= base_url()."c_accounts/#". $account->ndex; ?>" class="btn btn-primary btn-sm">Login</a>
+                                            <div class="pull-left">
+                                            
+                                            <div class="pull-left">
+                                            <form method="post" action="<?= $url;?>">
+                                            <input type="hidden" name="email" value="<?= $account->username; ?>" >
+                                                <input type="hidden" name="password" value="<?= $this->encrypt->decode($account->password); ?>">
+                                            <button class="btn btn-primary btn-sm" type="submit" title="LOGIN">LOGIN</button>
+                                                <input name="login" type="hidden" id="login" value="submit">
+                                            </form> 
+                                            
+                                            </div>
+
                                         <?php } ?>
                                         <!-- BEGIN SIMPLE MODAL MARKUP -->
                                         <div class="modal fade" id="simpleModal<?= $account->ndex; ?>" tabindex="-1" role="dialog" aria-labelledby="simpleModalLabel" aria-hidden="true">

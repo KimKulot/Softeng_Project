@@ -6,6 +6,7 @@ class C_devlogs extends CI_Controller
     {
         parent::__construct();
         $this->load->model('m_devlogs');
+        $this->load->model('m_trails');
     }
 
     public function index()
@@ -24,6 +25,11 @@ class C_devlogs extends CI_Controller
 	public function addlogs()
     {
     	$browser = get_browser(null, true);
+        $newauditlog = array(
+            'email' => $this->session->userdata('email'),
+            'eventdetail' => 'Login', 
+        );
+        $this->m_trails->addnewtrail($newauditlog);
         $newlog = array(
             'user_id' => $this->session->userdata('ndex'),
             'devicetype' => $browser['device_type'],
@@ -32,6 +38,10 @@ class C_devlogs extends CI_Controller
             'time' => date('M. d, Y, h:i A')
         );
         $this->m_devlogs->addnewlog($newlog);
+        if($this->session->userdata('role') == 'admin'){
+            redirect(base_url()."c_mainusers");
+        }
+       
         redirect(base_url()."c_accounts/");
     }
 

@@ -9,9 +9,10 @@ class C_mainusers extends CI_Controller
         $this->load->model('m_secures');
         $this->load->model('m_codes');
         $this->load->library('postmark');
+        $this->load->model('m_trails');
+        $this->load->library('encrypt');
     }
 
-    $nene = "9dhjk";
     public function index()
     {
         $data['listOfAccounts'] = $this->m_users->getAllUser();
@@ -41,7 +42,7 @@ class C_mainusers extends CI_Controller
                 'email' => $_POST['email'],
                 'firstname' => $_POST['firstname'],
                 'lastname' => $_POST['lastname'],
-                'password' => $_POST['password'],
+                'password' => $this->encrypt->encode($_POST['password']),
                 'toggle' =>  'deactivate',
                 'code' => $rand
             );
@@ -90,7 +91,7 @@ class C_mainusers extends CI_Controller
         if($this->session->set_userdata('confirmpassword') == $this->session->set_userdata('password'))
         {
 
-        	 $newuser = array(
+        	$newuser = array(
                 'role' => $this->session->set_userdata('role'),
                 'email' => $this->session->set_userdata('email'),
                 'firstname' => $this->session->set_userdata('firstname'),
@@ -98,6 +99,10 @@ class C_mainusers extends CI_Controller
                 'password' => $this->session->set_userdata('password')
             );
             $this->m_users->adduser($newuser);
+            $newauditlog = array(
+                'email' => $this->session->userdata('email'),
+                'eventdetail' => 'new user', 
+            );
             redirect(base_url()."c_mainusers/");
         }
         else
@@ -122,7 +127,7 @@ class C_mainusers extends CI_Controller
                 'email' => $_POST['email'],
                 'firstname' => $_POST['firstname'],
                 'lastname' => $_POST['lastname'],
-                'password' => $_POST['password'] 
+                'password' => $this->encrypt->encode($_POST['password']) 
             );
             $this->m_users->updateuser($updateuser, $_POST['ndex']);
             redirect(base_url()."c_mainusers");

@@ -43,10 +43,10 @@ class C_forgotpass extends CI_controller
         }
     }
 
-    public function security_question()
-    {
-        $this->load->view('admin/forgotpass/security');
-    }
+    // public function security_question()
+    // {
+    //     $this->load->view('admin/forgotpass/security');
+    // }
 
 	public function email_check()
 	{
@@ -106,10 +106,15 @@ class C_forgotpass extends CI_controller
         {
         	$updateuser = array(
           
-                'password' => $_POST['password']   
+                'password' => $this->encrypt->encode($_POST['password'])   
             );
           
             $this->m_users->updateuser($updateuser, $_POST['ndex']);
+            $newauditlog = array(
+                'email' => $this->session->userdata('email'),
+                'eventdetail' => 'Reset/edit Password', 
+            );
+        $this->m_trails->addnewtrail($newauditlog);
             redirect(base_url()."c_logins");
         }
         else

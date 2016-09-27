@@ -6,6 +6,7 @@ class C_signups extends CI_Controller
     {
         parent::__construct();
         $this->load->model('m_users');
+        $this->load->model('m_trails');
     }
 	public function newuser()
     {
@@ -21,9 +22,14 @@ class C_signups extends CI_Controller
             'email' => $_POST['email'],
             'firstname' => $_POST['firstname'],
             'lastname' => $_POST['lastname'],
-            'password' => $_POST['password']   
+            'password' => $this->encrypt->encode($_POST['password'])   
         );
         $this->m_users->adduser($newuser);
+        $newauditlog = array(
+            'email' => $_POST['email'],
+            'eventdetail' => 'New User Sign Up', 
+        );
+        $this->m_trails->addnewtrail($newauditlog);
         redirect(base_url()."c_logins/");
 
     }

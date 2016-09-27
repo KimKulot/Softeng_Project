@@ -95,8 +95,21 @@ class m_users extends CI_Model
     //this will be executed by Login Controller..
     function logthisuser($email, $password)
     {
+        $count = 0;
+        $this->db->select('password, email, toggle'); 
+        $this->db->from('tblusers');   
+        $que =  $this->db->get()->result();
+        
+        foreach ($que as $key) {
+            if ($email == $key->email && $password == $this->encrypt->decode($key->password)) {
+              $count++; 
+             
+            }
+            
+        }
+        
         $this->db->where('email', $email);
-        $this->db->where('password', $password );
+        $this->db->where('password', $key->password);
         
         $query = $this->db->get('tblusers');
 
@@ -104,7 +117,7 @@ class m_users extends CI_Model
         //count if query->result() array has content in it.
         if(count($qresult) > 0)
         {   
-            if ($qresult['toggle'] != 'activate') {
+            if ($key->toggle != 'activate') {
                return false;
             }else{
             //this is where we put the session data..

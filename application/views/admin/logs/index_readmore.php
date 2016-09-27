@@ -28,7 +28,7 @@
                                                 <td>
                                                     <?php if($logs->devicetype == "Desktop"){ ?>
                                                         <img height="25px" src="<?= base_url()."assets/mat-admin" ?>/img/laptop.png" alt="" />
-                                                    <?php }elseif ($logs->devicetype == "Mobile Phone") { ?>
+                                                    <?php }elseif ($logs->devicetype == "Mobile Phone" || $logs->devicetype == "Mobile Device") { ?>
                                                         <img height="25px" src="<?= base_url()."assets/mat-admin" ?>/img/mobile.png" alt="" />
                                                     <?php }elseif ($logs->devicetype == "Tablet") { ?>
                                                         <img height="25 px" src="<?= base_url()."assets/mat-admin" ?>/img/tablet.png" alt="" />

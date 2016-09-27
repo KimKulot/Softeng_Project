@@ -73,6 +73,11 @@
                         <div class="gui-icon"><i class="fa fa-user"></i></div>
                         <span class="title">Users</span>
                     </a>
+
+                    <a href="<?= base_url()."c_audit_trails" ?>" >
+                        <div class="gui-icon"><i class="fa fa-user"></i></div>
+                        <span class="title">Audit Trails</span>
+                    </a>
                 <?php } ?>
             </li>
             <!-- END USERS -->
